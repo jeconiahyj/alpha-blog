@@ -10,9 +10,8 @@
   </head>
 
   <body>
-    <% flash.each do |name, message|%>
-      <%= message %>
-    <% end %>
+    <%= render 'layouts/messages' %>
+    <%# in layouts folder harus specify pathnya kayak di atas (line 13) %>
     <%= yield %>
   </body>
 </html>

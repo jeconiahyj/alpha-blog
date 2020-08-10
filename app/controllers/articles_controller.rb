@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  # execute the method before all method is performed or any specified method
+
   def show # show => display individual article as requested
-    @article = Article.find(params[:id]) #find by id
     # @variable is an instance variable supaya bisa dipake di html.erb
   end
 
@@ -13,11 +15,10 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
 
   def create
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(article_params)
     # line above => require the top level key of :article and permit the :title and :description to be used by @article
     if @article.save # if the article is saved then notify the user and redirect
       flash[:notice] = "Article was created successfully!" # flash taroh di layouts/application.html.erb
@@ -31,8 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] = "Article was updated successfully!"
       redirect_to @article
     else
@@ -41,8 +41,19 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
+    flash[:notice] = "Article was deleted successfully!"
     redirect_to articles_path # this articles_path will redirect to the articles listing page which is the def index
   end
+
+  private # means that methods below this line can only be used inside this controller
+  
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  def article_params
+    params.require(:article).permit(:title, :description)
+  end
+
 end
