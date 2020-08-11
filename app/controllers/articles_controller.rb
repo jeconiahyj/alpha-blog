@@ -19,6 +19,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.user = User.find(6)
     # line above => require the top level key of :article and permit the :title and :description to be used by @article
     if @article.save # if the article is saved then notify the user and redirect
       flash[:notice] = "Article was created successfully!" # flash taroh di layouts/application.html.erb
