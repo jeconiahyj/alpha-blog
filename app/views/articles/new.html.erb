@@ -1,10 +1,6 @@
-<h1>Create a new article</h1>
+<h1 class="text-center mt-4">Create a new article</h1>
 
 <%# sebelom ada pake partial buat refactoring, form_with yg dipake di page ini kayak yg di line bawah ini
 form_with scope: :article, url: articles_path, local: true do |f| %>
 
 <%= render 'form' %>
-
-<p>
-  <%= link_to 'Return to articles listing', articles_path %>
-</p>

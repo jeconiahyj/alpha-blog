@@ -9,9 +9,13 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= render 'layouts/messages' %>
-    <%# in layouts folder harus specify pathnya kayak di atas (line 13) %>
-    <%= yield %>
+  <body class="d-flex flex-column">
+    <%= render 'layouts/navigation' %>
+    <div id="page-content">
+      <%= render 'layouts/messages' %>
+      <%# in layouts folder harus specify pathnya kayak di atas (line 13) %>
+      <%= yield %>
+    </div>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
