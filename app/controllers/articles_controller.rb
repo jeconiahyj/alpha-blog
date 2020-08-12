@@ -1,6 +1,11 @@
 class ArticlesController < ApplicationController
+  # before_action = execute the method before all method is performed or any specified method
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  # execute the method before all method is performed or any specified method
+  before_action :require_user, except: [:show, :index]
+  # method require_user ada di application_controller
+  before_action :require_same_user, only: [:edit, :update, :destroy]
+  # code di line 4 dan 6 gaboleh kebalik, harus cek login dulu baru same user, kalo ga nanti codenya error
+
 
   def show # show => display individual article as requested
     # @variable is an instance variable supaya bisa dipake di html.erb
@@ -20,7 +25,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.user = User.find(6)
+    @article.user = current_user
     # line above => require the top level key of :article and permit the :title and :description to be used by @article
     if @article.save # if the article is saved then notify the user and redirect
       flash[:notice] = "Article was created successfully!" # flash taroh di layouts/application.html.erb
@@ -56,6 +61,13 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :description)
+  end
+
+  def require_same_user
+    if current_user != @article.user
+      flash[:alert] = "You can only edit or delete your own article"
+      redirect_to @article
+    end
   end
 
 end
