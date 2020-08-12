@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new # so the first time the new.html.erb loads, no error caused by @article.errors in the new.html.erb
+    @article = Article.new # so the first time the new.html.erb loads, no error caused by @article.errors when the new.html.erb render shared/errors
   end
 
   def edit
